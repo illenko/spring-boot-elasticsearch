@@ -19,8 +19,11 @@ class TransactionEventService(
             transactionEventRepository.save(
                 TransactionEvent(
                     id = req.id,
-                    transactionId = req.transactionId,
+                    eventDateTime = req.eventDateTime,
                     eventType = req.eventType,
+                    transactionId = req.transactionId,
+                    transactionCreatedDateTime = req.transactionCreatedDateTime,
+                    transactionUpdatedDateTime = req.transactionUpdatedDateTime,
                     amount = req.amount,
                     userId = req.userId,
                     card = req.card,
@@ -32,6 +35,8 @@ class TransactionEventService(
             transactionRepository.save(
                 Transaction(
                     id = req.transactionId,
+                    createdDateTime = req.transactionCreatedDateTime,
+                    updatedDateTime = req.transactionUpdatedDateTime,
                     amount = req.amount,
                     userId = req.userId,
                     card = req.card,
