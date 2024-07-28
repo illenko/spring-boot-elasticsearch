@@ -1,6 +1,5 @@
 package com.example.elk.model
 
-import com.example.elk.enums.TransactionStatus
 import org.springframework.data.elasticsearch.annotations.Document
 import org.springframework.data.elasticsearch.annotations.Field
 import org.springframework.data.elasticsearch.annotations.FieldType
@@ -16,7 +15,7 @@ data class Transaction(
     val amount: Long,
     val userId: String,
     val card: String,
-    val status: TransactionStatus,
+    val status: String,
     val city: String,
     val merchant: String,
 )

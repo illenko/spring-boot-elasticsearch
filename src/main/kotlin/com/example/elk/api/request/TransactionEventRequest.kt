@@ -1,12 +1,10 @@
 package com.example.elk.api.request
 
-import com.example.elk.enums.EventType
-import com.example.elk.enums.TransactionStatus
 import java.time.OffsetDateTime
 
 data class TransactionEventRequest(
     val id: String,
-    val eventType: EventType,
+    val eventType: String,
     val eventDateTime: OffsetDateTime,
     val transactionId: String,
     val transactionCreatedDateTime: OffsetDateTime,
@@ -14,7 +12,7 @@ data class TransactionEventRequest(
     val amount: Long,
     val userId: String,
     val card: String,
-    val status: TransactionStatus,
+    val status: String,
     val city: String,
     val merchant: String,
 )

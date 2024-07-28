@@ -5,3 +5,8 @@ spring:
     elasticsearch:
       repositories:
         enabled: true
+
+elasticsearch:
+  host: localhost:9200
+  username: elastic
+  password: changeme

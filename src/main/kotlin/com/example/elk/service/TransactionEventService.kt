@@ -7,43 +7,44 @@ import com.example.elk.repo.TransactionEventRepository
 import com.example.elk.repo.TransactionRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
-import reactor.util.function.Tuple2
 
 @Service
 class TransactionEventService(
     private val transactionEventRepository: TransactionEventRepository,
     private val transactionRepository: TransactionRepository,
 ) {
-    fun process(req: TransactionEventRequest): Mono<Tuple2<TransactionEvent, Transaction>> =
+    fun process(req: TransactionEventRequest) =
         Mono.zip(
-            transactionEventRepository.save(
-                TransactionEvent(
-                    id = req.id,
-                    eventDateTime = req.eventDateTime,
-                    eventType = req.eventType,
-                    transactionId = req.transactionId,
-                    transactionCreatedDateTime = req.transactionCreatedDateTime,
-                    transactionUpdatedDateTime = req.transactionUpdatedDateTime,
-                    amount = req.amount,
-                    userId = req.userId,
-                    card = req.card,
-                    status = req.status,
-                    city = req.city,
-                    merchant = req.merchant,
-                ),
-            ),
-            transactionRepository.save(
-                Transaction(
-                    id = req.transactionId,
-                    createdDateTime = req.transactionCreatedDateTime,
-                    updatedDateTime = req.transactionUpdatedDateTime,
-                    amount = req.amount,
-                    userId = req.userId,
-                    card = req.card,
-                    status = req.status,
-                    city = req.city,
-                    merchant = req.merchant,
-                ),
-            ),
+            transactionEventRepository.save(req.toTransactionEvent()),
+            transactionRepository.save(req.toTransaction()),
+        )
+
+    fun TransactionEventRequest.toTransactionEvent() =
+        TransactionEvent(
+            id = this.id,
+            eventDateTime = this.eventDateTime,
+            eventType = this.eventType,
+            transactionId = this.transactionId,
+            transactionCreatedDateTime = this.transactionCreatedDateTime,
+            transactionUpdatedDateTime = this.transactionUpdatedDateTime,
+            amount = this.amount,
+            userId = this.userId,
+            card = this.card,
+            status = this.status,
+            city = this.city,
+            merchant = this.merchant,
+        )
+
+    fun TransactionEventRequest.toTransaction() =
+        Transaction(
+            id = this.transactionId,
+            createdDateTime = this.transactionCreatedDateTime,
+            updatedDateTime = this.transactionUpdatedDateTime,
+            amount = this.amount,
+            userId = this.userId,
+            card = this.card,
+            status = this.status,
+            city = this.city,
+            merchant = this.merchant,
         )
 }
